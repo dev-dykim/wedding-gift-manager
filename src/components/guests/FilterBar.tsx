@@ -65,8 +65,9 @@ export default function FilterBar({ filter, onChange, user }: FilterBarProps) {
           className="h-[42px] border border-gray-200 rounded-lg px-3 py-2 text-base bg-white focus:outline-none focus:ring-2 focus:ring-sky-500"
         >
           <option value="all">전체 금액</option>
-          <option value="under5">5만원 이하</option>
-          <option value="5to10">5~10만원</option>
+          <option value="under5">5만원 미만</option>
+          <option value="5to10">5만원~10만원 미만</option>
+          <option value="10">10만원</option>
           <option value="over10">10만원 초과</option>
         </select>
       </div>

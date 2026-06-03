@@ -46,9 +46,11 @@ export function useGuests(user: User | null) {
       query = query.ilike('name', `%${filter.search}%`);
     }
     if (filter.amountRange === 'under5') {
-      query = query.lte('amount', 50000);
+      query = query.lt('amount', 50000);
     } else if (filter.amountRange === '5to10') {
-      query = query.gte('amount', 50000).lte('amount', 100000);
+      query = query.gte('amount', 50000).lt('amount', 100000);
+    } else if (filter.amountRange === '10') {
+      query = query.eq('amount', 100000);
     } else if (filter.amountRange === 'over10') {
       query = query.gt('amount', 100000);
     }

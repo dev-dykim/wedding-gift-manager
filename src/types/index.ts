@@ -27,7 +27,7 @@ export interface GuestFilter {
   search: string;
   category: Category | 'all';
   relation: Relation | 'all';
-  amountRange: 'all' | 'under5' | '5to10' | 'over10';
+  amountRange: 'all' | 'under5' | '5to10' | '10' | 'over10';
 }
 
 export interface CategoryStats {
