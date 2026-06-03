@@ -80,7 +80,7 @@ export default function LoginForm({ onSignIn, onSignUp }: LoginFormProps) {
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500"
+            className="w-full border border-gray-300 rounded-lg px-3 py-2 text-base focus:outline-none focus:ring-2 focus:ring-sky-500"
             placeholder="홍길동"
           />
         </div>
@@ -92,7 +92,7 @@ export default function LoginForm({ onSignIn, onSignUp }: LoginFormProps) {
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           required
-          className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500"
+          className="w-full border border-gray-300 rounded-lg px-3 py-2 text-base focus:outline-none focus:ring-2 focus:ring-sky-500"
           placeholder="아이디 입력"
           autoCapitalize="off"
           autoCorrect="off"
@@ -106,7 +106,7 @@ export default function LoginForm({ onSignIn, onSignUp }: LoginFormProps) {
           onChange={(e) => setPassword(e.target.value)}
           required
           minLength={6}
-          className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500"
+          className="w-full border border-gray-300 rounded-lg px-3 py-2 text-base focus:outline-none focus:ring-2 focus:ring-sky-500"
           placeholder="6자 이상"
         />
       </div>

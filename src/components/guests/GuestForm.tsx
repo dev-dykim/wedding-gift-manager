@@ -54,7 +54,7 @@ export default function GuestForm({ onSubmit, onCancel, initial }: GuestFormProp
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
-            className="w-full h-[42px] border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500"
+            className="w-full h-[42px] border border-gray-300 rounded-lg px-3 py-2 text-base focus:outline-none focus:ring-2 focus:ring-sky-500"
           />
         </div>
         <div>
@@ -66,7 +66,7 @@ export default function GuestForm({ onSubmit, onCancel, initial }: GuestFormProp
             required
             min={0}
             step={10000}
-            className="w-full h-[42px] border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500"
+            className="w-full h-[42px] border border-gray-300 rounded-lg px-3 py-2 text-base focus:outline-none focus:ring-2 focus:ring-sky-500"
           />
         </div>
         <div className="flex gap-3">
@@ -104,7 +104,7 @@ export default function GuestForm({ onSubmit, onCancel, initial }: GuestFormProp
             type="text"
             value={memo}
             onChange={(e) => setMemo(e.target.value)}
-            className="w-full h-[42px] border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500"
+            className="w-full h-[42px] border border-gray-300 rounded-lg px-3 py-2 text-base focus:outline-none focus:ring-2 focus:ring-sky-500"
             placeholder="선택사항"
           />
         </div>

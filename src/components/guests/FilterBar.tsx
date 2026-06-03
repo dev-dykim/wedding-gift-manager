@@ -1,3 +1,4 @@
+import { useState, useRef } from 'react';
 import type { GuestFilter, User } from '../../types';
 
 interface FilterBarProps {
@@ -9,21 +10,37 @@ interface FilterBarProps {
 export default function FilterBar({ filter, onChange, user }: FilterBarProps) {
   const showAllCategories = user.role === 'admin';
   const showDadMom = ['admin', 'dad', 'mom'].includes(user.role);
+  const [localSearch, setLocalSearch] = useState(filter.search);
+  const composingRef = useRef(false);
+
+  function handleSearchChange(value: string) {
+    setLocalSearch(value);
+    if (!composingRef.current) {
+      onChange({ ...filter, search: value });
+    }
+  }
+
+  function handleCompositionEnd(e: React.CompositionEvent<HTMLInputElement>) {
+    composingRef.current = false;
+    onChange({ ...filter, search: (e.target as HTMLInputElement).value });
+  }
 
   return (
     <div className="space-y-3 p-4 bg-white border-b border-gray-100">
       <input
         type="text"
-        value={filter.search}
-        onChange={(e) => onChange({ ...filter, search: e.target.value })}
+        value={localSearch}
+        onChange={(e) => handleSearchChange(e.target.value)}
+        onCompositionStart={() => { composingRef.current = true; }}
+        onCompositionEnd={handleCompositionEnd}
         placeholder="이름 검색..."
-        className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500"
+        className="w-full border border-gray-200 rounded-lg px-3 py-2 text-base focus:outline-none focus:ring-2 focus:ring-sky-500"
       />
       <div className="flex gap-2 flex-wrap">
         <select
           value={filter.category}
           onChange={(e) => onChange({ ...filter, category: e.target.value as GuestFilter['category'] })}
-          className="h-[42px] border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-sky-500"
+          className="h-[42px] border border-gray-200 rounded-lg px-3 py-2 text-base bg-white focus:outline-none focus:ring-2 focus:ring-sky-500"
         >
           <option value="all">전체 카테고리</option>
           {showDadMom && <option value="dad">아버지</option>}
@@ -36,7 +53,7 @@ export default function FilterBar({ filter, onChange, user }: FilterBarProps) {
         <select
           value={filter.relation}
           onChange={(e) => onChange({ ...filter, relation: e.target.value as GuestFilter['relation'] })}
-          className="h-[42px] border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-sky-500"
+          className="h-[42px] border border-gray-200 rounded-lg px-3 py-2 text-base bg-white focus:outline-none focus:ring-2 focus:ring-sky-500"
         >
           <option value="all">전체 관계</option>
           <option value="친척">친척</option>
@@ -48,7 +65,7 @@ export default function FilterBar({ filter, onChange, user }: FilterBarProps) {
         <select
           value={filter.amountRange}
           onChange={(e) => onChange({ ...filter, amountRange: e.target.value as GuestFilter['amountRange'] })}
-          className="h-[42px] border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-sky-500"
+          className="h-[42px] border border-gray-200 rounded-lg px-3 py-2 text-base bg-white focus:outline-none focus:ring-2 focus:ring-sky-500"
         >
           <option value="all">전체 금액</option>
           <option value="under5">5만원 이하</option>
