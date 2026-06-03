@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import type { GuestFilter, User } from '../../types';
 
 interface FilterBarProps {
@@ -11,28 +11,24 @@ export default function FilterBar({ filter, onChange, user }: FilterBarProps) {
   const showAllCategories = user.role === 'admin';
   const showDadMom = ['admin', 'dad', 'mom'].includes(user.role);
   const [localSearch, setLocalSearch] = useState(filter.search);
-  const composingRef = useRef(false);
+  const timerRef = useRef<ReturnType<typeof setTimeout>>(null);
 
-  function handleSearchChange(value: string) {
-    setLocalSearch(value);
-    if (!composingRef.current) {
-      onChange({ ...filter, search: value });
-    }
-  }
-
-  function handleCompositionEnd(e: React.CompositionEvent<HTMLInputElement>) {
-    composingRef.current = false;
-    onChange({ ...filter, search: (e.target as HTMLInputElement).value });
-  }
+  useEffect(() => {
+    if (timerRef.current) clearTimeout(timerRef.current);
+    timerRef.current = setTimeout(() => {
+      if (localSearch !== filter.search) {
+        onChange({ ...filter, search: localSearch });
+      }
+    }, 300);
+    return () => { if (timerRef.current) clearTimeout(timerRef.current); };
+  }, [localSearch]);
 
   return (
     <div className="space-y-3 p-4 bg-white border-b border-gray-100">
       <input
         type="text"
         value={localSearch}
-        onChange={(e) => handleSearchChange(e.target.value)}
-        onCompositionStart={() => { composingRef.current = true; }}
-        onCompositionEnd={handleCompositionEnd}
+        onChange={(e) => setLocalSearch(e.target.value)}
         placeholder="이름 검색..."
         className="w-full border border-gray-200 rounded-lg px-3 py-2 text-base focus:outline-none focus:ring-2 focus:ring-sky-500"
       />
