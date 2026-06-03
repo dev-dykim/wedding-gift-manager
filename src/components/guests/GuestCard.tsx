@@ -34,7 +34,7 @@ const relationColor: Record<string, string> = {
   '기타': 'bg-gray-50 text-gray-500 hover:bg-gray-100',
 };
 
-const categoryOptions: { value: Category; label: string }[] = [
+const allCategoryOptions: { value: Category; label: string }[] = [
   { value: 'dad', label: '아버지' },
   { value: 'mom', label: '어머니' },
   { value: 'me', label: '본인' },
@@ -50,12 +50,37 @@ const relationOptions: { value: Relation; label: string }[] = [
   { value: '기타', label: '기타' },
 ];
 
+function getCategoryOptionsForRole(role: string): { value: Category; label: string }[] {
+  if (role === 'admin') return allCategoryOptions;
+  const own = allCategoryOptions.find((o) => o.value === role);
+  return [
+    ...(own ? [own] : []),
+    { value: 'common', label: '공통' },
+    { value: 'unknown', label: '미분류' },
+  ];
+}
+
 export default function GuestCard({ guest, user, onToggleThanked, onEdit, onDelete, onQuickUpdate }: GuestCardProps) {
   const isAdmin = user.role === 'admin';
-  const [editingField, setEditingField] = useState<'category' | 'relation' | null>(null);
+  const [editingField, setEditingField] = useState<'category' | 'relation' | 'memo' | null>(null);
+  const [memoValue, setMemoValue] = useState(guest.memo ?? '');
+
+  const categoryOptions = getCategoryOptionsForRole(user.role);
+  const canEditCategory = isAdmin || categoryOptions.length > 1;
+  const canEditRelation = isAdmin;
 
   function handleQuickChange(field: 'category' | 'relation', value: string) {
-    onQuickUpdate(guest.id, { [field]: value });
+    if (field === 'relation' && (value === '친척' || value === '교회')) {
+      onQuickUpdate(guest.id, { relation: value as Relation, category: 'common' });
+    } else {
+      onQuickUpdate(guest.id, { [field]: value });
+    }
+    setEditingField(null);
+  }
+
+  function handleMemoSave() {
+    const trimmed = memoValue.trim();
+    onQuickUpdate(guest.id, { memo: trimmed || null });
     setEditingField(null);
   }
 
@@ -65,7 +90,7 @@ export default function GuestCard({ guest, user, onToggleThanked, onEdit, onDele
         <div className="flex-1">
           <div className="flex items-center gap-2 mb-1 flex-wrap">
             <span className="font-semibold text-gray-900">{guest.name}</span>
-            {editingField === 'category' && isAdmin ? (
+            {editingField === 'category' && canEditCategory ? (
               <select
                 value={guest.category}
                 onChange={(e) => handleQuickChange('category', e.target.value)}
@@ -79,13 +104,13 @@ export default function GuestCard({ guest, user, onToggleThanked, onEdit, onDele
               </select>
             ) : (
               <button
-                onClick={() => isAdmin && setEditingField('category')}
-                className={`text-xs px-1.5 py-0.5 rounded ${categoryColor[guest.category] || 'bg-gray-50 text-gray-500'} ${isAdmin ? 'cursor-pointer' : ''}`}
+                onClick={() => canEditCategory && setEditingField('category')}
+                className={`text-xs px-1.5 py-0.5 rounded ${categoryColor[guest.category] || 'bg-gray-50 text-gray-500'} ${canEditCategory ? 'cursor-pointer' : ''}`}
               >
                 {categoryLabel[guest.category]}
               </button>
             )}
-            {editingField === 'relation' && isAdmin ? (
+            {editingField === 'relation' && canEditRelation ? (
               <select
                 value={guest.relation}
                 onChange={(e) => handleQuickChange('relation', e.target.value)}
@@ -99,8 +124,8 @@ export default function GuestCard({ guest, user, onToggleThanked, onEdit, onDele
               </select>
             ) : (
               <button
-                onClick={() => isAdmin && setEditingField('relation')}
-                className={`text-xs px-1.5 py-0.5 rounded ${relationColor[guest.relation] || 'bg-gray-50 text-gray-500'} ${isAdmin ? 'cursor-pointer' : ''}`}
+                onClick={() => canEditRelation && setEditingField('relation')}
+                className={`text-xs px-1.5 py-0.5 rounded ${relationColor[guest.relation] || 'bg-gray-50 text-gray-500'} ${canEditRelation ? 'cursor-pointer' : ''}`}
               >
                 {guest.relation}
               </button>
@@ -109,8 +134,27 @@ export default function GuestCard({ guest, user, onToggleThanked, onEdit, onDele
           <p className="text-lg font-bold text-sky-600">
             {guest.amount.toLocaleString()}원
           </p>
-          {guest.memo && (
-            <p className="text-xs text-gray-500 mt-1 bg-gray-50 px-2 py-1 rounded">{guest.memo}</p>
+          {editingField === 'memo' ? (
+            <div className="mt-1 flex gap-1">
+              <input
+                type="text"
+                value={memoValue}
+                onChange={(e) => setMemoValue(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && handleMemoSave()}
+                autoFocus
+                placeholder="메모 입력..."
+                className="flex-1 text-xs border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-sky-500"
+              />
+              <button onClick={handleMemoSave} className="text-xs text-sky-600 px-1">저장</button>
+              <button onClick={() => setEditingField(null)} className="text-xs text-gray-400 px-1">취소</button>
+            </div>
+          ) : (
+            <p
+              onClick={() => { setMemoValue(guest.memo ?? ''); setEditingField('memo'); }}
+              className="text-xs text-gray-500 mt-1 bg-gray-50 px-2 py-1 rounded cursor-pointer hover:bg-gray-100"
+            >
+              {guest.memo || '메모 추가...'}
+            </p>
           )}
         </div>
         <div className="flex flex-col items-end gap-2">
