@@ -142,22 +142,22 @@ export default function GuestCard({ guest, user, onToggleThanked, onEdit, onDele
           >
             {guest.thanked ? '답례 완료' : '답례 미완'}
           </button>
-          {isAdmin && (
-            <div className="flex gap-1">
-              <button
-                onClick={() => onEdit(guest)}
-                className="text-xs text-gray-400 hover:text-sky-600"
-              >
-                수정
-              </button>
+          <div className="flex gap-1">
+            <button
+              onClick={() => onEdit(guest)}
+              className="text-xs text-gray-400 hover:text-sky-600"
+            >
+              수정
+            </button>
+            {isAdmin && (
               <button
                 onClick={() => onDelete(guest.id)}
                 className="text-xs text-gray-400 hover:text-red-500"
               >
                 삭제
               </button>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </div>
     </div>

@@ -62,6 +62,7 @@ export default function GuestListPage({ user }: GuestListPageProps) {
           initial={editingGuest}
           onSubmit={handleSubmit}
           onCancel={() => { setShowForm(false); setEditingGuest(null); }}
+          user={user}
         />
       )}
     </div>

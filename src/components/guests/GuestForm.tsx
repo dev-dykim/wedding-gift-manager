@@ -1,17 +1,39 @@
 import { useState, useEffect } from 'react';
-import type { Guest, Category, Relation } from '../../types';
+import type { Guest, Category, Relation, User } from '../../types';
 
 interface GuestFormProps {
   onSubmit: (guest: Omit<Guest, 'id' | 'created_at' | 'created_by'>) => void;
   onCancel: () => void;
   initial?: Guest | null;
+  user: User;
 }
 
-export default function GuestForm({ onSubmit, onCancel, initial }: GuestFormProps) {
+const allCategoryOptions: { value: Category; label: string }[] = [
+  { value: 'dad', label: '아버지' },
+  { value: 'mom', label: '어머니' },
+  { value: 'me', label: '본인' },
+  { value: 'common', label: '공통' },
+  { value: 'unknown', label: '미분류' },
+];
+
+function getCategoryOptionsForRole(role: string): { value: Category; label: string }[] {
+  if (role === 'admin') return allCategoryOptions;
+  const own = allCategoryOptions.find((o) => o.value === role);
+  return [
+    ...(own ? [own] : []),
+    { value: 'common', label: '공통' },
+    { value: 'unknown', label: '미분류' },
+  ];
+}
+
+export default function GuestForm({ onSubmit, onCancel, initial, user }: GuestFormProps) {
+  const isAdmin = user.role === 'admin';
+  const categoryOptions = getCategoryOptionsForRole(user.role);
+
   const [name, setName] = useState(initial?.name ?? '');
   const [amount, setAmount] = useState(initial?.amount?.toString() ?? '');
-  const [category, setCategory] = useState<Category>(initial?.category ?? 'dad');
-  const [relation, setRelation] = useState<Relation>(initial?.relation ?? '친척');
+  const [category, setCategory] = useState<Category>(initial?.category ?? categoryOptions[0].value);
+  const [relation, setRelation] = useState<Relation>(initial?.relation ?? '기타');
   const [memo, setMemo] = useState(initial?.memo ?? '');
   const [thanked, setThanked] = useState(initial?.thanked ?? false);
 
@@ -25,6 +47,13 @@ export default function GuestForm({ onSubmit, onCancel, initial }: GuestFormProp
       setThanked(initial.thanked);
     }
   }, [initial]);
+
+  function handleRelationChange(value: Relation) {
+    setRelation(value);
+    if (value === '친척' || value === '교회') {
+      setCategory('common');
+    }
+  }
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -54,7 +83,8 @@ export default function GuestForm({ onSubmit, onCancel, initial }: GuestFormProp
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
-            className="w-full h-[42px] border border-gray-300 rounded-lg px-3 py-2 text-base focus:outline-none focus:ring-2 focus:ring-sky-500"
+            disabled={!isAdmin}
+            className="w-full h-[42px] border border-gray-300 rounded-lg px-3 py-2 text-base focus:outline-none focus:ring-2 focus:ring-sky-500 disabled:bg-gray-100"
           />
         </div>
         <div>
@@ -66,7 +96,8 @@ export default function GuestForm({ onSubmit, onCancel, initial }: GuestFormProp
             required
             min={0}
             step={10000}
-            className="w-full h-[42px] border border-gray-300 rounded-lg px-3 py-2 text-base focus:outline-none focus:ring-2 focus:ring-sky-500"
+            disabled={!isAdmin}
+            className="w-full h-[42px] border border-gray-300 rounded-lg px-3 py-2 text-base focus:outline-none focus:ring-2 focus:ring-sky-500 disabled:bg-gray-100"
           />
         </div>
         <div className="flex gap-3">
@@ -75,21 +106,20 @@ export default function GuestForm({ onSubmit, onCancel, initial }: GuestFormProp
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value as Category)}
-              className="w-full h-[42px] border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-sky-500"
+              className="w-full h-[42px] border border-gray-300 rounded-lg px-3 py-2 text-base bg-white focus:outline-none focus:ring-2 focus:ring-sky-500"
             >
-              <option value="dad">아버지</option>
-              <option value="mom">어머니</option>
-              <option value="me">본인</option>
-              <option value="common">공통</option>
-              <option value="unknown">미분류</option>
+              {categoryOptions.map((o) => (
+                <option key={o.value} value={o.value}>{o.label}</option>
+              ))}
             </select>
           </div>
           <div className="flex-1">
             <label className="block text-sm font-medium text-gray-700 mb-1">관계</label>
             <select
               value={relation}
-              onChange={(e) => setRelation(e.target.value as Relation)}
-              className="w-full h-[42px] border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-sky-500"
+              onChange={(e) => handleRelationChange(e.target.value as Relation)}
+              disabled={!isAdmin}
+              className="w-full h-[42px] border border-gray-300 rounded-lg px-3 py-2 text-base bg-white focus:outline-none focus:ring-2 focus:ring-sky-500 disabled:bg-gray-100"
             >
               <option value="친척">친척</option>
               <option value="직장">직장</option>
