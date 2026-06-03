@@ -8,9 +8,9 @@ function getAllowedCategories(user: User): Category[] {
       return ['dad', 'mom', 'me', 'common', 'unknown'];
     case 'dad':
     case 'mom':
-      return ['dad', 'mom', 'common'];
+      return ['dad', 'mom', 'common', 'unknown'];
     case 'me':
-      return ['me', 'common'];
+      return ['me', 'common', 'unknown'];
   }
 }
 
