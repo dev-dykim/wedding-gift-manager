@@ -50,9 +50,6 @@ export default function GuestForm({ onSubmit, onCancel, initial, user }: GuestFo
 
   function handleRelationChange(value: Relation) {
     setRelation(value);
-    if (value === '친척' || value === '교회') {
-      setCategory('common');
-    }
   }
 
   function handleSubmit(e: React.FormEvent) {

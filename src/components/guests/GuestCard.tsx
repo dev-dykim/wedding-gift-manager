@@ -69,11 +69,7 @@ export default function GuestCard({ guest, user, onToggleThanked, onEdit, onDele
   const canEditRelation = isAdmin;
 
   function handleQuickChange(field: 'category' | 'relation', value: string) {
-    if (field === 'relation' && (value === '친척' || value === '교회')) {
-      onQuickUpdate(guest.id, { relation: value as Relation, category: 'common' });
-    } else {
-      onQuickUpdate(guest.id, { [field]: value });
-    }
+    onQuickUpdate(guest.id, { [field]: value });
     setEditingField(null);
   }
 
