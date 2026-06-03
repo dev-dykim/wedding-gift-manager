@@ -75,13 +75,17 @@ export function useGuests(user: User | null) {
 
   async function updateGuest(id: string, updates: Partial<Guest>) {
     const { error } = await supabase.from('guests').update(updates).eq('id', id);
-    if (!error) await fetchGuests();
+    if (!error) {
+      setGuests((prev) => prev.map((g) => g.id === id ? { ...g, ...updates } : g));
+    }
     return { error };
   }
 
   async function deleteGuest(id: string) {
     const { error } = await supabase.from('guests').delete().eq('id', id);
-    if (!error) await fetchGuests();
+    if (!error) {
+      setGuests((prev) => prev.filter((g) => g.id !== id));
+    }
     return { error };
   }
 
