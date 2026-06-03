@@ -54,7 +54,7 @@ export default function GuestForm({ onSubmit, onCancel, initial }: GuestFormProp
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
-            className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500"
+            className="w-full h-[42px] border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500"
           />
         </div>
         <div>
@@ -66,7 +66,7 @@ export default function GuestForm({ onSubmit, onCancel, initial }: GuestFormProp
             required
             min={0}
             step={10000}
-            className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500"
+            className="w-full h-[42px] border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500"
           />
         </div>
         <div className="flex gap-3">
@@ -75,7 +75,7 @@ export default function GuestForm({ onSubmit, onCancel, initial }: GuestFormProp
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value as Category)}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white"
+              className="w-full h-[42px] border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-sky-500"
             >
               <option value="dad">아버지</option>
               <option value="mom">어머니</option>
@@ -88,7 +88,7 @@ export default function GuestForm({ onSubmit, onCancel, initial }: GuestFormProp
             <select
               value={relation}
               onChange={(e) => setRelation(e.target.value as Relation)}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white"
+              className="w-full h-[42px] border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-sky-500"
             >
               <option value="친척">친척</option>
               <option value="직장">직장</option>
@@ -104,7 +104,7 @@ export default function GuestForm({ onSubmit, onCancel, initial }: GuestFormProp
             type="text"
             value={memo}
             onChange={(e) => setMemo(e.target.value)}
-            className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500"
+            className="w-full h-[42px] border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500"
             placeholder="선택사항"
           />
         </div>

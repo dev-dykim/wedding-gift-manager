@@ -47,6 +47,7 @@ export default function GuestListPage({ user }: GuestListPageProps) {
         onToggleThanked={toggleThanked}
         onEdit={handleEdit}
         onDelete={handleDelete}
+        onQuickUpdate={(id, updates) => updateGuest(id, updates)}
       />
       {isAdmin && (
         <button

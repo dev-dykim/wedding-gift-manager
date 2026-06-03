@@ -8,9 +8,10 @@ interface GuestListProps {
   onToggleThanked: (id: string, thanked: boolean) => void;
   onEdit: (guest: Guest) => void;
   onDelete: (id: string) => void;
+  onQuickUpdate: (id: string, updates: Partial<Guest>) => void;
 }
 
-export default function GuestList({ guests, user, loading, onToggleThanked, onEdit, onDelete }: GuestListProps) {
+export default function GuestList({ guests, user, loading, onToggleThanked, onEdit, onDelete, onQuickUpdate }: GuestListProps) {
   if (loading) {
     return (
       <div className="flex justify-center py-12">
@@ -45,6 +46,7 @@ export default function GuestList({ guests, user, loading, onToggleThanked, onEd
             onToggleThanked={onToggleThanked}
             onEdit={onEdit}
             onDelete={onDelete}
+            onQuickUpdate={onQuickUpdate}
           />
         ))}
       </div>

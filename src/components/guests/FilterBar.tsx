@@ -23,7 +23,7 @@ export default function FilterBar({ filter, onChange, user }: FilterBarProps) {
         <select
           value={filter.category}
           onChange={(e) => onChange({ ...filter, category: e.target.value as GuestFilter['category'] })}
-          className="border border-gray-200 rounded-lg px-2 py-1.5 text-sm bg-white"
+          className="h-[42px] border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-sky-500"
         >
           <option value="all">전체 카테고리</option>
           {showDadMom && <option value="dad">아버지</option>}
@@ -36,7 +36,7 @@ export default function FilterBar({ filter, onChange, user }: FilterBarProps) {
         <select
           value={filter.relation}
           onChange={(e) => onChange({ ...filter, relation: e.target.value as GuestFilter['relation'] })}
-          className="border border-gray-200 rounded-lg px-2 py-1.5 text-sm bg-white"
+          className="h-[42px] border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-sky-500"
         >
           <option value="all">전체 관계</option>
           <option value="친척">친척</option>
@@ -48,7 +48,7 @@ export default function FilterBar({ filter, onChange, user }: FilterBarProps) {
         <select
           value={filter.amountRange}
           onChange={(e) => onChange({ ...filter, amountRange: e.target.value as GuestFilter['amountRange'] })}
-          className="border border-gray-200 rounded-lg px-2 py-1.5 text-sm bg-white"
+          className="h-[42px] border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-sky-500"
         >
           <option value="all">전체 금액</option>
           <option value="under5">5만원 이하</option>
