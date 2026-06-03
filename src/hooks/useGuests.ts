@@ -33,7 +33,8 @@ export function useGuests(user: User | null) {
       .from('guests')
       .select('*')
       .in('category', allowed)
-      .order('created_at', { ascending: false });
+      .order('created_at', { ascending: false })
+      .order('name', { ascending: true });
 
     if (filter.category !== 'all') {
       query = query.eq('category', filter.category);
