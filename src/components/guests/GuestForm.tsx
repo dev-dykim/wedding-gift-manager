@@ -79,7 +79,8 @@ export default function GuestForm({ onSubmit, onCancel, initial }: GuestFormProp
             >
               <option value="dad">아버지</option>
               <option value="mom">어머니</option>
-              <option value="sibling">형제/자매</option>
+              <option value="me">본인</option>
+              <option value="unknown">미분류</option>
             </select>
           </div>
           <div className="flex-1">
@@ -92,6 +93,7 @@ export default function GuestForm({ onSubmit, onCancel, initial }: GuestFormProp
               <option value="친척">친척</option>
               <option value="직장">직장</option>
               <option value="친구">친구</option>
+              <option value="교회">교회</option>
               <option value="기타">기타</option>
             </select>
           </div>

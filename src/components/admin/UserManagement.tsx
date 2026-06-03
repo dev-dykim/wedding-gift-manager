@@ -6,7 +6,7 @@ const roleLabel: Record<string, string> = {
   admin: '관리자',
   dad: '아버지',
   mom: '어머니',
-  sibling: '형제/자매',
+  me: '본인',
 };
 
 export default function UserManagement() {
@@ -75,7 +75,8 @@ export default function UserManagement() {
               <option value="admin">관리자</option>
               <option value="dad">아버지</option>
               <option value="mom">어머니</option>
-              <option value="sibling">형제/자매</option>
+              <option value="me">본인</option>
+              <option value="unknown">미분류</option>
             </select>
             <span
               className={`text-xs px-2 py-0.5 rounded-full ${

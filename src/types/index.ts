@@ -1,6 +1,6 @@
-export type Role = 'admin' | 'dad' | 'mom' | 'sibling';
-export type Category = 'dad' | 'mom' | 'sibling';
-export type Relation = '친척' | '직장' | '친구' | '기타';
+export type Role = 'admin' | 'dad' | 'mom' | 'me';
+export type Category = 'dad' | 'mom' | 'me' | 'unknown';
+export type Relation = '친척' | '직장' | '친구' | '교회' | '기타';
 
 export interface User {
   id: string;

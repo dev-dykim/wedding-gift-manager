@@ -5,12 +5,12 @@ import type { Guest, GuestFilter, User, Category } from '../types';
 function getAllowedCategories(user: User): Category[] {
   switch (user.role) {
     case 'admin':
-      return ['dad', 'mom', 'sibling'];
+      return ['dad', 'mom', 'me', 'unknown'];
     case 'dad':
     case 'mom':
       return ['dad', 'mom'];
-    case 'sibling':
-      return ['sibling'];
+    case 'me':
+      return ['me'];
   }
 }
 

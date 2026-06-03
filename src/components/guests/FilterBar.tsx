@@ -28,9 +28,10 @@ export default function FilterBar({ filter, onChange, user }: FilterBarProps) {
           <option value="all">전체 카테고리</option>
           {showDadMom && <option value="dad">아버지</option>}
           {showDadMom && <option value="mom">어머니</option>}
-          {(showAllCategories || user.role === 'sibling') && (
-            <option value="sibling">형제/자매</option>
+          {(showAllCategories || user.role === 'me') && (
+            <option value="me">본인</option>
           )}
+          <option value="unknown">미분류</option>
         </select>
         <select
           value={filter.relation}
@@ -41,6 +42,7 @@ export default function FilterBar({ filter, onChange, user }: FilterBarProps) {
           <option value="친척">친척</option>
           <option value="직장">직장</option>
           <option value="친구">친구</option>
+          <option value="교회">교회</option>
           <option value="기타">기타</option>
         </select>
         <select

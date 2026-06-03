@@ -60,7 +60,7 @@ export function useAuth() {
         id: data.user.id,
         email,
         name,
-        role: 'sibling',
+        role: 'me',
         approved: false,
       });
       if (profileError) return { error: profileError };

@@ -7,7 +7,8 @@ interface StatsCardProps {
 const categoryLabel: Record<string, string> = {
   dad: '아버지',
   mom: '어머니',
-  sibling: '형제/자매',
+  me: '본인',
+  unknown: '미분류',
 };
 
 export default function StatsCard({ stats }: StatsCardProps) {

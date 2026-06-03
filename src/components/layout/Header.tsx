@@ -9,7 +9,7 @@ const roleLabel: Record<string, string> = {
   admin: '관리자',
   dad: '아버지',
   mom: '어머니',
-  sibling: '형제/자매',
+  me: '본인',
 };
 
 export default function Header({ user, onSignOut }: HeaderProps) {
