@@ -11,7 +11,7 @@ export default function StatsPage({ user }: StatsPageProps) {
   const { guests, loading } = useGuests(user);
 
   const stats = useMemo(() => {
-    const categories: Category[] = ['dad', 'mom', 'me', 'unknown'];
+    const categories: Category[] = ['dad', 'mom', 'me', 'common', 'unknown'];
     return categories
       .map((category): CategoryStats => {
         const filtered = guests.filter((g) => g.category === category);

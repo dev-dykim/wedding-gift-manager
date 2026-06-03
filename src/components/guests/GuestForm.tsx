@@ -80,6 +80,7 @@ export default function GuestForm({ onSubmit, onCancel, initial }: GuestFormProp
               <option value="dad">아버지</option>
               <option value="mom">어머니</option>
               <option value="me">본인</option>
+              <option value="common">공통</option>
               <option value="unknown">미분류</option>
             </select>
           </div>

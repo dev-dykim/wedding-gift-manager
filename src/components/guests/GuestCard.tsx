@@ -14,6 +14,7 @@ const categoryLabel: Record<string, string> = {
   dad: '아버지',
   mom: '어머니',
   me: '본인',
+  common: '공통',
   unknown: '미분류',
 };
 
@@ -21,6 +22,7 @@ const categoryColor: Record<string, string> = {
   dad: 'bg-blue-50 text-blue-600 hover:bg-blue-100',
   mom: 'bg-pink-50 text-pink-600 hover:bg-pink-100',
   me: 'bg-green-50 text-green-600 hover:bg-green-100',
+  common: 'bg-teal-50 text-teal-600 hover:bg-teal-100',
   unknown: 'bg-yellow-50 text-yellow-600 hover:bg-yellow-100',
 };
 
@@ -36,6 +38,7 @@ const categoryOptions: { value: Category; label: string }[] = [
   { value: 'dad', label: '아버지' },
   { value: 'mom', label: '어머니' },
   { value: 'me', label: '본인' },
+  { value: 'common', label: '공통' },
   { value: 'unknown', label: '미분류' },
 ];
 

@@ -1,5 +1,5 @@
 export type Role = 'admin' | 'dad' | 'mom' | 'me';
-export type Category = 'dad' | 'mom' | 'me' | 'unknown';
+export type Category = 'dad' | 'mom' | 'me' | 'common' | 'unknown';
 export type Relation = '친척' | '직장' | '친구' | '교회' | '기타';
 
 export interface User {

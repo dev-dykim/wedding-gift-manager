@@ -44,6 +44,7 @@ export default function FilterBar({ filter, onChange, user }: FilterBarProps) {
           {(showAllCategories || user.role === 'me') && (
             <option value="me">본인</option>
           )}
+          <option value="common">공통</option>
           <option value="unknown">미분류</option>
         </select>
         <select

@@ -8,6 +8,7 @@ const categoryLabel: Record<string, string> = {
   dad: '아버지',
   mom: '어머니',
   me: '본인',
+  common: '공통',
   unknown: '미분류',
 };
 
