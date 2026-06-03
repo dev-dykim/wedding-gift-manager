@@ -62,8 +62,7 @@ function getCategoryOptionsForRole(role: string): { value: Category; label: stri
 
 export default function GuestCard({ guest, user, onToggleThanked, onEdit, onDelete, onQuickUpdate }: GuestCardProps) {
   const isAdmin = user.role === 'admin';
-  const [editingField, setEditingField] = useState<'category' | 'relation' | 'memo' | null>(null);
-  const [memoValue, setMemoValue] = useState(guest.memo ?? '');
+  const [editingField, setEditingField] = useState<'category' | 'relation' | null>(null);
 
   const categoryOptions = getCategoryOptionsForRole(user.role);
   const canEditCategory = isAdmin || categoryOptions.length > 1;
@@ -75,12 +74,6 @@ export default function GuestCard({ guest, user, onToggleThanked, onEdit, onDele
     } else {
       onQuickUpdate(guest.id, { [field]: value });
     }
-    setEditingField(null);
-  }
-
-  function handleMemoSave() {
-    const trimmed = memoValue.trim();
-    onQuickUpdate(guest.id, { memo: trimmed || null });
     setEditingField(null);
   }
 
@@ -134,27 +127,8 @@ export default function GuestCard({ guest, user, onToggleThanked, onEdit, onDele
           <p className="text-lg font-bold text-sky-600">
             {guest.amount.toLocaleString()}원
           </p>
-          {editingField === 'memo' ? (
-            <div className="mt-1 flex gap-1">
-              <input
-                type="text"
-                value={memoValue}
-                onChange={(e) => setMemoValue(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && handleMemoSave()}
-                autoFocus
-                placeholder="메모 입력..."
-                className="flex-1 text-xs border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-sky-500"
-              />
-              <button onClick={handleMemoSave} className="text-xs text-sky-600 px-1">저장</button>
-              <button onClick={() => setEditingField(null)} className="text-xs text-gray-400 px-1">취소</button>
-            </div>
-          ) : (
-            <p
-              onClick={() => { setMemoValue(guest.memo ?? ''); setEditingField('memo'); }}
-              className="text-xs text-gray-500 mt-1 bg-gray-50 px-2 py-1 rounded cursor-pointer hover:bg-gray-100"
-            >
-              {guest.memo || '메모 추가...'}
-            </p>
+          {guest.memo && (
+            <p className="text-xs text-gray-500 mt-1 bg-gray-50 px-2 py-1 rounded">{guest.memo}</p>
           )}
         </div>
         <div className="flex flex-col items-end gap-2">
