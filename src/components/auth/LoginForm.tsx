@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+const EMAIL_DOMAIN = '@wedding.local';
+
 interface LoginFormProps {
   onSignIn: (email: string, password: string) => Promise<{ error: unknown }>;
   onSignUp: (email: string, password: string, name: string) => Promise<{ error: unknown }>;
@@ -7,21 +9,32 @@ interface LoginFormProps {
 
 export default function LoginForm({ onSignIn, onSignUp }: LoginFormProps) {
   const [isSignUp, setIsSignUp] = useState(false);
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [signUpSuccess, setSignUpSuccess] = useState(false);
 
+  function toEmail(id: string) {
+    return id.includes('@') ? id : id + EMAIL_DOMAIN;
+  }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError('');
     setLoading(true);
 
+    const email = toEmail(username.trim());
+
     if (isSignUp) {
       if (!name.trim()) {
         setError('이름을 입력해주세요.');
+        setLoading(false);
+        return;
+      }
+      if (!username.trim()) {
+        setError('아이디를 입력해주세요.');
         setLoading(false);
         return;
       }
@@ -34,7 +47,7 @@ export default function LoginForm({ onSignIn, onSignUp }: LoginFormProps) {
     } else {
       const { error } = await onSignIn(email, password);
       if (error) {
-        setError('이메일 또는 비밀번호가 올바르지 않습니다.');
+        setError('아이디 또는 비밀번호가 올바르지 않습니다.');
       }
     }
     setLoading(false);
@@ -73,14 +86,16 @@ export default function LoginForm({ onSignIn, onSignUp }: LoginFormProps) {
         </div>
       )}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">이메일</label>
+        <label className="block text-sm font-medium text-gray-700 mb-1">아이디</label>
         <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          type="text"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
           required
           className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500"
-          placeholder="email@example.com"
+          placeholder="아이디 입력"
+          autoCapitalize="off"
+          autoCorrect="off"
         />
       </div>
       <div>
