@@ -33,7 +33,8 @@ export default function App() {
         <Header user={user} onSignOut={signOut} />
         <main>
           <Routes>
-            <Route path="/" element={<GuestListPage user={user} />} />
+            <Route path="/" element={<Navigate to="/list" replace />} />
+            <Route path="/list" element={<GuestListPage user={user} />} />
             <Route path="/stats" element={<StatsPage user={user} />} />
             {user.role === 'admin' && (
               <Route path="/admin" element={<AdminPage />} />

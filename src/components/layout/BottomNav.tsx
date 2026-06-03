@@ -10,7 +10,7 @@ export default function BottomNav({ user }: BottomNavProps) {
   const navigate = useNavigate();
 
   const tabs = [
-    { path: '/', label: '목록', icon: '📋' },
+    { path: '/list', label: '목록', icon: '📋' },
     { path: '/stats', label: '통계', icon: '📊' },
     ...(user.role === 'admin'
       ? [{ path: '/admin', label: '관리', icon: '⚙️' }]
