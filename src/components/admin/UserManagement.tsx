@@ -2,13 +2,6 @@ import { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
 import type { User, Role } from '../../types';
 
-const roleLabel: Record<string, string> = {
-  admin: '관리자',
-  dad: '아버지',
-  mom: '어머니',
-  me: '본인',
-};
-
 export default function UserManagement() {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
