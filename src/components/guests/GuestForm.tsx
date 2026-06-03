@@ -27,7 +27,6 @@ function getCategoryOptionsForRole(role: string): { value: Category; label: stri
 }
 
 export default function GuestForm({ onSubmit, onCancel, initial, user }: GuestFormProps) {
-  const isAdmin = user.role === 'admin';
   const categoryOptions = getCategoryOptionsForRole(user.role);
 
   const [name, setName] = useState(initial?.name ?? '');
@@ -80,8 +79,7 @@ export default function GuestForm({ onSubmit, onCancel, initial, user }: GuestFo
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
-            disabled={!isAdmin}
-            className="w-full h-[42px] border border-gray-300 rounded-lg px-3 py-2 text-base focus:outline-none focus:ring-2 focus:ring-sky-500 disabled:bg-gray-100"
+            className="w-full h-[42px] border border-gray-300 rounded-lg px-3 py-2 text-base focus:outline-none focus:ring-2 focus:ring-sky-500"
           />
         </div>
         <div>
@@ -93,8 +91,7 @@ export default function GuestForm({ onSubmit, onCancel, initial, user }: GuestFo
             required
             min={0}
             step={10000}
-            disabled={!isAdmin}
-            className="w-full h-[42px] border border-gray-300 rounded-lg px-3 py-2 text-base focus:outline-none focus:ring-2 focus:ring-sky-500 disabled:bg-gray-100"
+            className="w-full h-[42px] border border-gray-300 rounded-lg px-3 py-2 text-base focus:outline-none focus:ring-2 focus:ring-sky-500"
           />
         </div>
         <div className="flex gap-3">
@@ -115,8 +112,7 @@ export default function GuestForm({ onSubmit, onCancel, initial, user }: GuestFo
             <select
               value={relation}
               onChange={(e) => handleRelationChange(e.target.value as Relation)}
-              disabled={!isAdmin}
-              className="w-full h-[42px] border border-gray-300 rounded-lg px-3 py-2 text-base bg-white focus:outline-none focus:ring-2 focus:ring-sky-500 disabled:bg-gray-100"
+                className="w-full h-[42px] border border-gray-300 rounded-lg px-3 py-2 text-base bg-white focus:outline-none focus:ring-2 focus:ring-sky-500"
             >
               <option value="친척">친척</option>
               <option value="직장">직장</option>
