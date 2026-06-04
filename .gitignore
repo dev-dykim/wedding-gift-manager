@@ -28,3 +28,6 @@ dist-ssr
 
 # OMC
 .omc/
+
+# Supabase SQL
+supabase/
